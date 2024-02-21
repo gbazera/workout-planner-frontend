@@ -22,13 +22,13 @@ const Home = () => {
 
     return (
         <div className="home">
-            <div className="routines">
+            <RoutineForm />
+            <div className="routines section">
                 {routines &&
                     routines.map((r) => (
                         <RoutineDetails key={r._id} routine={r} />
                     ))}
             </div>
-            <RoutineForm />
         </div>
     )
 }

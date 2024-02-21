@@ -17,17 +17,29 @@ const RoutineDetails = ({ routine }) => {
     }
 
     return (
-        <div className="routine-details" style={{padding: '20px', border: '1px black solid', margin: '20px'}}>
-            <h4>{routine.title}</h4>
-            <ul>
-                {routine.exercises.map((exercise) => (
-                    <li key={exercise.id}>
-                        <strong>{exercise.title}</strong> Sets: {exercise.sets} Reps: {exercise.reps}
-                    </li>
-                ))}
-            </ul>
-            <p>{formatDistanceToNow(new Date(routine.createdAt), {addSuffix: true})}</p>
-            <button onClick={handleClick}>DELETE</button>
+        <div className="routine-details box">
+            <div className="level">
+                <p>{routine.title}</p>
+                <p>{formatDistanceToNow(new Date(routine.createdAt), {addSuffix: true})}</p>
+            </div>
+            <div className="block">
+                <ul>
+                    {routine.exercises.map((exercise) => (
+                        <li key={exercise.id}>
+                            <strong>{exercise.title}</strong> Sets: {exercise.sets} Reps: {exercise.reps}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+            
+            <div className="field is-grouped">
+                <p className="control">
+                    <button className="button is-info is-outlined">EDIT</button>
+                </p>
+                <p className="control">
+                    <button className="button is-danger is-outlined" onClick={handleClick}>DELETE</button>
+                </p>
+            </div>
         </div>
     )
 }
