@@ -1,44 +1,67 @@
 import { useState } from 'react'
+import { useSignup } from '../hooks/useSignup'
 
 const Signup = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const { signup, isLoading, error } = useSignup()
 
-    const handleSubmit = async (e)=>{
-        e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
-        console.log(email, ':', password)
+        await signup(email, password)
     }
 
-    return(
-        <form onSubmit={handleSubmit} className='section is-flex is-flex-direction-column is-align-items-center'>
+    return (
+        <form
+            onSubmit={handleSubmit}
+            className="section is-flex is-flex-direction-column is-align-items-center"
+        >
             <div className="field">
                 <p className="subtitle">Sign Up</p>
             </div>
 
-            <div class="field">
-                <label class="label">Email</label>
-                <div class="control">
-                    <input class="input" type="email" onChange={(e)=>setEmail(e.target.value)} value={email}/>
+            <div className="field">
+                <label className="label">Email</label>
+                <div className="control">
+                    <input
+                        className="input"
+                        type="email"
+                        onChange={(e) => setEmail(e.target.value)}
+                        value={email}
+                    />
                 </div>
-                <p class="help is-danger">Error</p>
             </div>
 
-            <div class="field">
-                <label class="label">Password</label>
-                <div class="control">
-                    <input class="input" type="password" onChange={(e)=>setPassword(e.target.value)} value={password}/>
+            <div className="field">
+                <label className="label">Password</label>
+                <div className="control">
+                    <input
+                        className="input"
+                        type="password"
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                    />
                 </div>
-                <p class="help is-danger">Error</p>
             </div>
 
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary">Sign Up</button>
+            <div className="field">
+                <div className="control">
+                    <button
+                        className={
+                            (isLoading ? 'is-loading ' : '') +
+                            'button is-primary'
+                        }
+                    >
+                        Sign Up
+                    </button>
                 </div>
+            </div>
+            <div className="field">
+                {error && <p className="help is-danger">{error}</p>}
             </div>
         </form>
     )
 }
 
-export default Signup;
+export default Signup

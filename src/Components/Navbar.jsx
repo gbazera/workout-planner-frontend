@@ -11,14 +11,14 @@ const Navbar = () => {
                 </div>
             </div>
             <div class="navbar-end">
-            <div class="navbar-item">
-                <div class="buttons">
-                    <Link to={'/login'} className="button is-light">
-                        Login
-                    </Link>
-                    <Link to={'/signup'} className="button is-primary">
-                        Sign up
-                    </Link>
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <Link to={'/login'} className="button is-light">
+                            Login
+                        </Link>
+                        <Link to={'/signup'} className="button is-primary">
+                            Sign up
+                        </Link>
                     </div>
                 </div>
             </div>

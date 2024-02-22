@@ -41,7 +41,8 @@ const RoutineForm = () => {
 
     return (
         <form className="create section" onSubmit={handleSubmit}>
-            <h3>Add a new routine</h3><br />
+            <h3>Add a new routine</h3>
+            <br />
 
             <div className="field">
                 <label className="label">Routine Name</label>
