@@ -5,12 +5,17 @@
 }
 
 body{
-  background-color: #fcfcfc;
+  background-color: #f5f5f5;
   padding: 0 400px;
 }
 
-input.error{
-  border: 1px red solid;
+.navbar{
+  padding: 16px 38px;
+  background-color: transparent;
+}
+
+input{
+  min-width: 320px;
 }
 
 @media screen and (max-width: 1600px) {
