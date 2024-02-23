@@ -1,13 +1,15 @@
 import { useState } from 'react'
+import { useLogin } from '../hooks/useLogin'
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const { login, isLoading, error } = useLogin()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        console.log(email, ':', password)
+        await login(email, password)
     }
 
     return (
@@ -19,36 +21,44 @@ const Login = () => {
                 <p className="subtitle">Login</p>
             </div>
 
-            <div class="field">
-                <label class="label">Email</label>
-                <div class="control">
+            <div className="field">
+                <label className="label">Email</label>
+                <div className="control">
                     <input
-                        class="input"
+                        className="input"
                         type="email"
                         onChange={(e) => setEmail(e.target.value)}
                         value={email}
                     />
                 </div>
-                <p class="help is-danger">Error</p>
             </div>
 
-            <div class="field">
-                <label class="label">Password</label>
-                <div class="control">
+            <div className="field">
+                <label className="label">Password</label>
+                <div className="control">
                     <input
-                        class="input"
+                        className="input"
                         type="password"
                         onChange={(e) => setPassword(e.target.value)}
                         value={password}
                     />
                 </div>
-                <p class="help is-danger">Error</p>
             </div>
 
-            <div class="field">
-                <div class="control">
-                    <button class="button is-primary">Login</button>
+            <div className="field">
+                <div className="control">
+                    <button
+                        className={
+                            (isLoading ? 'is-loading ' : '') +
+                            'button is-primary'
+                        }
+                    >
+                        Login
+                    </button>
                 </div>
+            </div>
+            <div className="field">
+                {error && <p className="help is-danger">{error}</p>}
             </div>
         </form>
     )
