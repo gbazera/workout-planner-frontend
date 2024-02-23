@@ -16,7 +16,7 @@ function App() {
 
                 <div className="pages">
                     <Routes>
-                        <Route path="/" element={user ? (user.verified ? <Home /> : <div className='notification is-warning'>Your email is not verified.</div>) : <Navigate to='/login' />} />
+                        <Route path="/" element={user ? <Home /> : <Navigate to='/login' />} />
                         <Route path="/login" element={!user ? <Login /> : <Navigate to='/' />} />
                         <Route path="/signup" element={!user ? <Signup /> : <Navigate to='/' />} />
                     </Routes>
