@@ -15,7 +15,7 @@ const Login = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="section is-flex is-flex-direction-column is-align-items-center"
+            className="section is-flex is-flex-direction-column is-align-items-center auth"
         >
             <div className="field">
                 <p className="subtitle">Login</p>
