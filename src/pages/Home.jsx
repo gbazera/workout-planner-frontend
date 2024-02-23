@@ -1,24 +1,26 @@
 import { useEffect } from 'react'
 import { useRoutinesContext } from '../hooks/useRoutinesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 import RoutineDetails from '../Components/RoutineDetails'
 import RoutineForm from '../Components/RoutineForm'
 
 const Home = () => {
-    const {routines, dispatch} = useRoutinesContext()
+    const { routines, dispatch } = useRoutinesContext()
+    const { user } = useAuthContext()
 
     useEffect(() => {
         const fetchRoutines = async () => {
-            const response = await fetch('/api/routines/')
+            const response = await fetch('/api/routines/', {
+                headers: { 'Authorization': `Bearer ${user.token}` },
+            })
             const json = await response.json()
 
-            if (response.ok) {
-                dispatch({type: 'SET_ROUTINES', payload: json})
-            }
+            if (response.ok) dispatch({ type: 'SET_ROUTINES', payload: json })
         }
 
-        fetchRoutines()
-    }, [dispatch])
+        if (user) fetchRoutines()
+    }, [dispatch, user])
 
     return (
         <div className="home">

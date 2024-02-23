@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useRoutinesContext } from '../hooks/useRoutinesContext'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const RoutineForm = () => {
     const { dispatch } = useRoutinesContext()
+    const { user } = useAuthContext()
+
     const [title, setTitle] = useState('')
     const exercises = []
 
@@ -13,6 +16,11 @@ const RoutineForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        if(!user){
+            setError('You must be logged in.')
+            return
+        }
+
         const routine = { title, exercises }
 
         const response = await fetch('/api/routines', {
@@ -20,6 +28,7 @@ const RoutineForm = () => {
             body: JSON.stringify(routine),
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${user.token}`
             },
         })
 
