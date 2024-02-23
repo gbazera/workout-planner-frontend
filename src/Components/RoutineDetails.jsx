@@ -50,9 +50,8 @@ const RoutineDetails = ({ routine }) => {
                 <div className="block">
                     <ul>
                         {routine.exercises.map((exercise) => (
-                            <li key={exercise.id}>
-                                <strong>{exercise.title}</strong> Sets:{' '}
-                                {exercise.sets} Reps: {exercise.reps}
+                            <li key={exercise.name}>
+                                <strong>{exercise.name}</strong> - {exercise.sets} sets, {exercise.reps} reps
                             </li>
                         ))}
                     </ul>
@@ -102,7 +101,7 @@ const RoutineDetails = ({ routine }) => {
                                         <input
                                             className="input"
                                             type="text"
-                                            value={exercise.title}
+                                            value={exercise.name}
                                         />
                                     </div>
                                     <div className="control">
