@@ -11,38 +11,21 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="navbar" role="navigation" aria-label="main navigation">
-            <div className="navbar-start">
-                <div className="navbar-brand">
-                    <Link to={'/'} className="navbar-item subtitle">
-                        Workout Planner
-                    </Link>
-                </div>
-            </div>
-            <div className="navbar-end">
+        <nav>
+            <Link to={'/'} className="logo">
+                Workout Planner
+            </Link>
+            <div className="end">
                 {user && (
-                    <>
-                        <Link className="navbar-item">{user.email}</Link>
-                        <div className="navbar-item">
-                            <button
-                                className="button is-danger is-outlined"
-                                onClick={handleClick}
-                            >
-                                Log out
-                            </button>
-                        </div>
-                    </>
+                    <div className='item'>
+                        <Link className='link'>{user.email}</Link>
+                        <button onClick={handleClick}>Log out</button>
+                    </div>
                 )}
                 {!user && (
-                    <div className="navbar-item">
-                        <div className="buttons">
-                            <Link to={'/login'} className="button is-light">
-                                Login
-                            </Link>
-                            <Link to={'/signup'} className="button is-primary">
-                                Sign up
-                            </Link>
-                        </div>
+                    <div className='item'>
+                        <Link to={'/login'} className='button outlined'>Login</Link>
+                        <Link to={'/signup'} className='button'>Sign up</Link>
                     </div>
                 )}
             </div>

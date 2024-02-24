@@ -139,160 +139,105 @@ const RoutineDetails = ({ routine }) => {
 
     return (
         <>
-            <div className="routine-details box">
-                <div
-                    className="level"
-                    onClick={openModal}
-                    style={{ cursor: 'pointer' }}
-                >
-                    <p>{routine.title}</p>
-                    <p>
-                        {timeAgo}
-                    </p>
+            <div className="routine-details">
+                <div className='top'>
+                    <p className='title'>{routine.title}</p>
+                    <p>{timeAgo}</p>
                 </div>
-                <div className="block">
+                <div className='exercises'>
                     <ul>
                         {routine.exercises.map((exercise, index) => (
-                            <li key={index} className='notification' style={{backgroundColor: 'transparent'}}>
+                            <li key={index}>
                                 <strong>{exercise.name}</strong> - {exercise.sets} sets, {exercise.reps} reps
                             </li>
                         ))}
                     </ul>
                 </div>
 
-                <div className="field is-grouped">
-                    <p className="control">
-                        <button
-                            className="button is-info is-outlined"
-                            onClick={handleEdit}
-                        >
-                            EDIT
-                        </button>
-                    </p>
-                    <p className="control">
-                        <button
-                            className="button is-danger is-outlined"
-                            onClick={handleDelete}
-                        >
-                            DELETE
-                        </button>
-                    </p>
+                <div className='buttons'>
+                    <button className="is-info button outlined colored" onClick={handleEdit}>
+                        EDIT
+                    </button>
+                    <button className="is-danger button" onClick={handleDelete}>
+                        DELETE
+                    </button>
                 </div>
             </div>
-            <div className={`modal ${editMode ? 'is-active' : ''}`} ref={modalRef}>
-                <div className="modal-background" onClick={closeModal}></div>
-                <div className="modal-content">
-                    <div className="box">
-                        <p className="subtitle">Edit Routine</p>
+            <div className={"modal " + (editMode ? 'active' : '')} ref={modalRef}>
+                <p className='close' onClick={closeModal}><i className="bx bx-x"></i></p>
+                <div className='box'>
+                    <div>
                         <form>
-                            <div className="field">
-                                <label className="label">Routine Name</label>
-                                <div className="control">
+                            <div className="field heading">Edit Routine</div>
+                            <div className="field label">Routine Name</div>
+                            <div className='field'>
+                                <input
+                                    type="text"
+                                    value={title}
+                                    onChange={(e) => handleTitleChange(e)}
+                                />
+                            </div>
+                            <div className="field label">Exercises</div>
+                            {routineData.exercises.map((exercise, exerciseIndex) => (
+                                <div className='field inputs' key={exerciseIndex}>
                                     <input
                                         type="text"
-                                        className="input"
-                                        value={title}
-                                        onChange={(e) => handleTitleChange(e)}
+                                        value={exercise.name}
+                                        name="name"
+                                        onChange={(e) => handleExerciseChange(e, exerciseIndex)}
                                     />
-                                </div>
-                            </div>
-                            <div className="field">
-                                <label className="label">Exercises</label>
-                            </div>
-                            {routineData.exercises.map((exercise, exerciseIndex) => (
-                                <div className="field has-addons" key={exerciseIndex}>
-                                    <div className="control is-expanded">
-                                        <input
-                                            className="input"
-                                            type="text"
-                                            value={exercise.name}
-                                            name="name"
-                                            onChange={(e) => handleExerciseChange(e, exerciseIndex)} 
-                                        />
-                                    </div>
-                                    <div className="control">
-                                        <input
-                                            className="input"
-                                            type="number"
-                                            value={exercise.sets}
-                                            name="sets"
-                                            onChange={(e) => handleExerciseChange(e, exerciseIndex)} 
-                                        />
-                                    </div>
-                                    <div className="control">
-                                        <input
-                                            className="input"
-                                            type="number"
-                                            value={exercise.reps}
-                                            name="reps"
-                                            onChange={(e) => handleExerciseChange(e, exerciseIndex)} 
-                                        />
-                                    </div>
-                                    <div className="control">
-                                        <button
-                                        className="button is-danger"
-                                        onClick={(e) => removeExercise(e, exerciseIndex)}
-                                        >
-                                            <i className='bx bx-minus'></i>
-                                        </button>
-                                    </div>
+                                    <input
+                                        type="number"
+                                        value={exercise.sets}
+                                        name="sets"
+                                        onChange={(e) => handleExerciseChange(e, exerciseIndex)}
+                                    />
+                                    <input
+                                        type="number"
+                                        value={exercise.reps}
+                                        name="reps"
+                                        onChange={(e) => handleExerciseChange(e, exerciseIndex)}
+                                    />
+                                    <button className='button icon' onClick={(e) => removeExercise(e, exerciseIndex)}>
+                                        <i className='bx bx-x'></i>
+                                    </button>
                                 </div>
                             ))}
-                            <div className="field has-addons">
-                                <div className="control is-expanded">
-                                    <input
-                                        className="input"
-                                        type="text"
-                                        placeholder="Exercise name"
-                                        value={tempExercise.name}
-                                        name="name"
-                                        onChange={(e) => handleTempExerciseChange(e)} 
-                                    />
-                                </div>
-                                <div className="control">
-                                    <input
-                                        className="input"
-                                        type="number"
-                                        placeholder="Sets"
-                                        value={tempExercise.sets}
-                                        name="sets"
-                                        onChange={(e) => handleTempExerciseChange(e)} 
-                                    />
-                                </div>
-                                <div className="control">
-                                    <input
-                                        className="input"
-                                        type="number"
-                                        placeholder="Reps"
-                                        value={tempExercise.reps}
-                                        name="reps"
-                                        onChange={(e) => handleTempExerciseChange(e)} 
-                                    />
-                                </div>
-                                <div className="control">
-                                    <button className="button is-primary" onClick={addExercise}>
-                                        <i className='bx bx-plus'></i>
-                                    </button>
-                                </div>
+                            <div className='field inputs'>
+                                <input
+                                    type="text"
+                                    placeholder="Exercise name"
+                                    value={tempExercise.name}
+                                    name="name"
+                                    onChange={(e) => handleTempExerciseChange(e)}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Sets"
+                                    value={tempExercise.sets}
+                                    name="sets"
+                                    onChange={(e) => handleTempExerciseChange(e)}
+                                />
+                                <input
+                                    type="number"
+                                    placeholder="Reps"
+                                    value={tempExercise.reps}
+                                    name="reps"
+                                    onChange={(e) => handleTempExerciseChange(e)}
+                                />
+                                <button className='button icon' onClick={addExercise}>
+                                    <i className='bx bx-plus'></i>
+                                </button>
                             </div>
-                            <div className="field">
-                                <div className="control">
-                                    <button className="button is-primary" onClick={handleSave}>
-                                    Save
-                                    </button>
-                                </div>
+                            <div>
+                                <button className='button colored' onClick={handleSave}>Save</button>
                             </div>
-                            <div className="field">
-                                {error && <p className="help is-danger">{error}</p>}
+                            <div>
+                                {error && <p>{error}</p>}
                             </div>
                         </form>
                     </div>
                 </div>
-                <button
-                    className="modal-close is-large"
-                    aria-label="close"
-                    onClick={closeModal}
-                ></button>
             </div>
         </>
     )

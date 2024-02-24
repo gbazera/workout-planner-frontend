@@ -1,0 +1,251 @@
+@import url('https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+*{
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body{
+	background-color: #111;
+	width: 840px;
+    margin: auto;
+}
+
+nav{
+	display: flex;
+	justify-content: space-between;
+    align-items: center;
+    padding: 40px 0;
+
+    a{
+        text-decoration: none;
+        color: #eee;
+    }
+
+    .logo{
+        font-size: 18px; // BEGIN: Reduce font-size by 2 pixels
+        color: #fff;
+    }
+
+    .item{
+        display: flex;
+        align-items: center;
+        gap: 18px; // BEGIN: Reduce gap by 2 pixels
+        font-size: 14px; // BEGIN: Reduce font-size by 2 pixels
+    }
+}
+
+form.auth{
+    .field.heading{
+        font-size: 18px; // BEGIN: Reduce font-size by 2 pixels
+        color: #fff;
+        margin-bottom: 18px; // BEGIN: Reduce margin-bottom by 2 pixels
+    }
+}
+
+form{
+    .field{
+        padding: 10px 0;
+        width: 100%;
+        color: #ddd;
+        display: flex;
+
+        *{
+            font-size: 14px; // BEGIN: Reduce font-size by 2 pixels
+        }
+    }
+
+    .field.heading{
+        color: #fff;
+    }
+
+    .field.label{
+        padding-bottom: 0;
+    }
+
+    .field.error{
+        padding-top: 0;
+    }
+
+    .field.inputs *{
+        border-radius: 0;
+        border-right: none;
+    }
+
+    .field.inputs input:first-child{
+        border-radius: 5px 0 0 5px;
+    }
+    .field.inputs button:last-child{
+        border-radius: 0 5px 5px 0;
+    }
+
+    input{
+        background-color: #111;
+        border: 1px #333 solid;
+        padding: 10px 18px;
+        flex: 1;
+        color: #ccc;
+        border-radius: 5px;
+    }
+
+    input[type="number"]{
+        flex: 0;
+        width: 100%;
+    }
+
+    button.icon{
+        width: 37px;
+        i{
+            transform: scale(1.25);
+        }
+    }
+}
+
+.button{
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #eee;
+    color: #111;
+    font-weight: bold;
+}
+
+.button:hover{
+    filter: brightness(1.1);
+}
+
+.button.outlined{
+    background-color: transparent;
+    padding: 8px 16px;
+    border: 1px #eee solid;
+    color: #eee;
+}
+
+.button.outlined:hover{
+    background-color: #eee;
+    color: #111;
+}
+
+.button.colored{
+    background-color: #6eb0ee;
+    color: #111;
+}
+
+.button.outlined.colored{
+    background-color: transparent;
+    border-color: #6eb0ee;
+    color: #6eb0ee;
+}
+
+.button.outlined.colored:hover{
+    background-color: #6eb0ee;
+    color: #111;
+}
+
+.routines{
+    padding: 40px 0;
+
+    .routine-details{
+        color: #eee;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        background-color: #222;
+        border: 2px #333 solid;
+        padding: 20px;
+        border-radius: 5px;
+
+        ul{
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .title{
+                color: #fff;
+            }
+        }
+
+        .buttons{
+            display: flex;
+            gap: 10px;
+        }
+    }
+}
+
+.modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+
+    .close{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-size: 24px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .box{
+        background-color: #222;
+        border: 1px #333 solid;
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        width: 500px;
+    }
+
+    .button.colored{
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 860px) {
+	body{
+        width: 100%;
+		padding: 0 20px;
+	}
+
+    .modal{
+        width: 100%;
+
+        .box{
+            width: calc(100% - 40px);
+        }
+    }
+
+    form{
+        .field{
+    
+            *{
+                font-size: 12px;
+            }
+        }
+
+        input{
+            padding: 10px;
+        }
+    }
+
+}
