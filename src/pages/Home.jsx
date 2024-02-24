@@ -11,7 +11,7 @@ const Home = () => {
 
     useEffect(() => {
         const fetchRoutines = async () => {
-            const response = await fetch(process.env.API_URL + '/api/routines/', {
+            const response = await fetch('https://polar-plains-02584-00b5f84bf725.herokuapp.com/api/routines/', {
                 headers: { 'Authorization': `Bearer ${user.token}` },
             })
             const json = await response.json()
