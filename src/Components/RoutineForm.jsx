@@ -124,7 +124,7 @@ const RoutineForm = () => {
                         {exercise.name}
                     </strong>{' '}
                     {exercise.sets} sets, {exercise.reps} reps
-                    <button onClick={() => removeExercise(index)}>
+                    <button onClick={() => removeExercise(index)} className='button'>
                         Remove
                     </button>
                 </div>
@@ -152,7 +152,7 @@ const RoutineForm = () => {
                     value={newExercise.reps}
                     onChange={handleInputChange}
                 />
-                <button onClick={handleAddExercise}>+</button>
+                <button onClick={handleAddExercise} className='button icon'>+</button>
             </div>
 
             <div className='field'>
