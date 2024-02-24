@@ -90,7 +90,7 @@ const RoutineDetails = ({ routine }) => {
 
         console.log(routine._id)
 
-        const response = await fetch('/api/routines/' + routine._id, {
+        const response = await fetch('https://workout-planner-backend-12oe.onrender.com/api/routines/' + routine._id, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` },
             body: JSON.stringify(routineData),
@@ -127,7 +127,7 @@ const RoutineDetails = ({ routine }) => {
 
         if (!user) return
 
-        const response = await fetch('/api/routines/' + routine._id, {
+        const response = await fetch('https://workout-planner-backend-12oe.onrender.com/api/routines/' + routine._id, {
             method: 'DELETE',
             headers: { Authorization: `Bearer ${user.token}` },
         })
