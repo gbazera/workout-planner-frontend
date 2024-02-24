@@ -165,6 +165,7 @@ const RoutineDetails = ({ routine }) => {
             </div>
             <div className={"modal " + (editMode ? 'active' : '')} ref={modalRef}>
                 <p className='close' onClick={closeModal}><i className="bx bx-x"></i></p>
+                <div className="bg" onClick={closeModal}></div>
                 <div className='box'>
                     <div>
                         <form>
