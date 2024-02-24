@@ -10,7 +10,7 @@ export const useLogin = () => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch('https://workout-planner-backend-12oe.onrender.com/api/user/login', {
+        const response = await fetch(process.env.API_URL + '/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

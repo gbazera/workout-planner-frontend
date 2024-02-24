@@ -41,7 +41,7 @@ const RoutineForm = () => {
 
         const routine = { title, exercises }
 
-        const response = await fetch('https://workout-planner-backend-12oe.onrender.com/api/routines', {
+        const response = await fetch(process.env.API_URL + '/api/routines', {
             method: 'POST',
             body: JSON.stringify(routine),
             headers: {
