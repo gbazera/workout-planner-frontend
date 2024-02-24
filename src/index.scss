@@ -94,6 +94,7 @@ form{
     input[type="number"]{
         flex: 0;
         width: 100%;
+        min-width: 70px;
     }
 
     .button.icon{
