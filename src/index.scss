@@ -150,6 +150,9 @@ form{
 
 .routines{
     padding: 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 
     .routine-details{
         color: #eee;
