@@ -19,13 +19,13 @@ const RoutineDetails = ({ routine }) => {
     const modalRef = useRef(null)
 
     const openModal = () => {
-        modalRef.current.classList.add('is-active')
-        document.documentElement.classList.add('is-clipped')
+        modalRef.current.classList.add('active')
+        document.documentElement.classList.add('overflow')
     }
 
     const closeModal = () => {
-        modalRef.current.classList.remove('is-active')
-        document.documentElement.classList.remove('is-clipped')
+        modalRef.current.classList.remove('active')
+        document.documentElement.classList.remove('overflow')
     }
 
     // editing
