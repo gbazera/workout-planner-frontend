@@ -18,6 +18,19 @@ export const routinesReducer = (state, action) => {
                     (r) => r._id !== action.payload._id
                 ),
             }
+        // case 'EDIT_ROUTINE':
+        //     return {
+        //         ...state, 
+        //         routines: state.routines.map(routine => routine._id === action.payload._id ? action.payload.json : routine)
+        //     }
+        case 'EDIT_ROUTINE':
+            return {
+                ...state,
+                routines: state.routines.map((r) =>
+                    r._id === action.payload.json._id ? action.payload.json : r
+                ),
+            }
+        
         default:
             return state
     }

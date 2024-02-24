@@ -27,8 +27,8 @@ const Home = () => {
             <RoutineForm />
             <div className="routines section">
                 {routines &&
-                    routines.map((r) => (
-                        <RoutineDetails key={r._id} routine={r} />
+                    routines.map((r, i) => (
+                        <RoutineDetails key={i} routine={r} />
                     ))}
             </div>
         </div>

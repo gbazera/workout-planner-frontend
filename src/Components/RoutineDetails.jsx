@@ -7,6 +7,15 @@ const RoutineDetails = ({ routine }) => {
     const { dispatch } = useRoutinesContext()
     const { user } = useAuthContext()
 
+    const [editMode, setEditMode] = useState(false); // Control edit mode
+    const [title, setTitle] = useState(routine.title); // Control title input
+    const [routineData, setRoutineData] = useState({
+        _id: routine._id,
+        title: routine.title,
+        exercises: [...routine.exercises], // Create a copy to edit
+        createdAt: routine.createdAt,
+    });
+
     const modalRef = useRef(null)
 
     const openModal = () => {
@@ -19,7 +28,105 @@ const RoutineDetails = ({ routine }) => {
         document.documentElement.classList.remove('is-clipped')
     }
 
-    const handleDelete = async () => {
+    // editing
+
+    const handleEdit = () => {
+        setEditMode(true);
+        openModal();
+    };
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+        setRoutineData({ ...routineData, title: e.target.value });
+    };
+
+    const handleExerciseChange = (e, exerciseIndex) => {
+        const updatedExercises = [...routineData.exercises];
+        updatedExercises[exerciseIndex][e.target.name] = e.target.value;
+        setRoutineData({ ...routineData, exercises: updatedExercises });
+        console.log(routine._id)
+    };
+
+    const [tempExercise, setTempExercise] = useState({ name: '', sets: 0, reps: 0 });
+    const handleTempExerciseChange = (e) => {
+        setTempExercise({
+        ...tempExercise,
+        [e.target.name]: e.target.value,
+        });
+    };
+
+    const [error, setError] = useState(null);
+
+    const addExercise = (e) => {
+        e.preventDefault()
+
+        if (!tempExercise.name || !tempExercise.sets || !tempExercise.reps) return setError('Please fill out all fields');
+
+        setRoutineData({
+            ...routineData,
+            exercises: [
+            ...routineData.exercises,
+            tempExercise, // Add new exercise
+            ],
+        });
+
+        setTempExercise({ name: '', sets: 0, reps: 0 });
+    };
+
+    const removeExercise = (e, exerciseIndex) => {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const updatedExercises = routineData.exercises.filter(
+            (_, index) => index !== exerciseIndex
+        );
+        setRoutineData({ ...routineData, exercises: updatedExercises });
+    };
+
+    const handleSave = async (e) => {
+        e.preventDefault()
+
+        if (!user) return;
+
+        console.log(routine._id)
+
+        const response = await fetch('/api/routines/' + routine._id, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` },
+            body: JSON.stringify(routineData),
+        })
+
+        const json = await response.json()
+
+        if (response.ok) {
+            const editAction = {
+                type: 'EDIT_ROUTINE',
+                payload: {
+                    json: routineData
+                }
+            };
+
+            dispatch(editAction); 
+            
+            setEditMode(false);
+            closeModal();
+        }
+    };
+
+    let timeAgo = 'Unknown'; 
+    if (routine.createdAt) {  
+        try { 
+            timeAgo = formatDistanceToNow(new Date(routine.createdAt), { addSuffix: true }); 
+        } catch (error) {
+            console.error("Error formatting date:", error); 
+        }
+    } 
+
+    //
+
+    const handleDelete = async (e) => {
+        e.preventDefault()
+
         if (!user) return
 
         const response = await fetch('/api/routines/' + routine._id, {
@@ -42,15 +149,13 @@ const RoutineDetails = ({ routine }) => {
                 >
                     <p>{routine.title}</p>
                     <p>
-                        {formatDistanceToNow(new Date(routine.createdAt), {
-                            addSuffix: true,
-                        })}
+                        {timeAgo}
                     </p>
                 </div>
                 <div className="block">
                     <ul>
-                        {routine.exercises.map((exercise) => (
-                            <li key={exercise.name}>
+                        {routine.exercises.map((exercise, index) => (
+                            <li key={index} className='notification' style={{backgroundColor: 'transparent'}}>
                                 <strong>{exercise.name}</strong> - {exercise.sets} sets, {exercise.reps} reps
                             </li>
                         ))}
@@ -61,7 +166,7 @@ const RoutineDetails = ({ routine }) => {
                     <p className="control">
                         <button
                             className="button is-info is-outlined"
-                            onClick={openModal}
+                            onClick={handleEdit}
                         >
                             EDIT
                         </button>
@@ -76,7 +181,7 @@ const RoutineDetails = ({ routine }) => {
                     </p>
                 </div>
             </div>
-            <div className="modal" ref={modalRef}>
+            <div className={`modal ${editMode ? 'is-active' : ''}`} ref={modalRef}>
                 <div className="modal-background" onClick={closeModal}></div>
                 <div className="modal-content">
                     <div className="box">
@@ -88,20 +193,23 @@ const RoutineDetails = ({ routine }) => {
                                     <input
                                         type="text"
                                         className="input"
-                                        defaultValue={routine.title}
+                                        value={title}
+                                        onChange={(e) => handleTitleChange(e)}
                                     />
                                 </div>
                             </div>
                             <div className="field">
                                 <label className="label">Exercises</label>
                             </div>
-                            {routine.exercises.map((exercise) => (
-                                <div className="field" key={exercise.id}>
+                            {routineData.exercises.map((exercise, exerciseIndex) => (
+                                <div className="field has-addons" key={exerciseIndex}>
                                     <div className="control is-expanded">
                                         <input
                                             className="input"
                                             type="text"
                                             value={exercise.name}
+                                            name="name"
+                                            onChange={(e) => handleExerciseChange(e, exerciseIndex)} 
                                         />
                                     </div>
                                     <div className="control">
@@ -109,6 +217,8 @@ const RoutineDetails = ({ routine }) => {
                                             className="input"
                                             type="number"
                                             value={exercise.sets}
+                                            name="sets"
+                                            onChange={(e) => handleExerciseChange(e, exerciseIndex)} 
                                         />
                                     </div>
                                     <div className="control">
@@ -116,7 +226,17 @@ const RoutineDetails = ({ routine }) => {
                                             className="input"
                                             type="number"
                                             value={exercise.reps}
+                                            name="reps"
+                                            onChange={(e) => handleExerciseChange(e, exerciseIndex)} 
                                         />
+                                    </div>
+                                    <div className="control">
+                                        <button
+                                        className="button is-danger"
+                                        onClick={(e) => removeExercise(e, exerciseIndex)}
+                                        >
+                                            <i className='bx bx-minus'></i>
+                                        </button>
                                     </div>
                                 </div>
                             ))}
@@ -126,6 +246,9 @@ const RoutineDetails = ({ routine }) => {
                                         className="input"
                                         type="text"
                                         placeholder="Exercise name"
+                                        value={tempExercise.name}
+                                        name="name"
+                                        onChange={(e) => handleTempExerciseChange(e)} 
                                     />
                                 </div>
                                 <div className="control">
@@ -133,6 +256,9 @@ const RoutineDetails = ({ routine }) => {
                                         className="input"
                                         type="number"
                                         placeholder="Sets"
+                                        value={tempExercise.sets}
+                                        name="sets"
+                                        onChange={(e) => handleTempExerciseChange(e)} 
                                     />
                                 </div>
                                 <div className="control">
@@ -140,18 +266,26 @@ const RoutineDetails = ({ routine }) => {
                                         className="input"
                                         type="number"
                                         placeholder="Reps"
+                                        value={tempExercise.reps}
+                                        name="reps"
+                                        onChange={(e) => handleTempExerciseChange(e)} 
                                     />
                                 </div>
                                 <div className="control">
-                                    <button className="button is-primary">+</button>
+                                    <button className="button is-primary" onClick={addExercise}>
+                                        <i className='bx bx-plus'></i>
+                                    </button>
                                 </div>
                             </div>
                             <div className="field">
                                 <div className="control">
-                                    <button className="button is-primary">
-                                        Save
+                                    <button className="button is-primary" onClick={handleSave}>
+                                    Save
                                     </button>
                                 </div>
+                            </div>
+                            <div className="field">
+                                {error && <p className="help is-danger">{error}</p>}
                             </div>
                         </form>
                     </div>
