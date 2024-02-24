@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useRoutinesContext } from '../hooks/useRoutinesContext'
 import { formatDistanceToNow } from 'date-fns'
 import { useAuthContext } from '../hooks/useAuthContext'
@@ -95,8 +95,6 @@ const RoutineDetails = ({ routine }) => {
             headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.token}` },
             body: JSON.stringify(routineData),
         })
-
-        const json = await response.json()
 
         if (response.ok) {
             const editAction = {
