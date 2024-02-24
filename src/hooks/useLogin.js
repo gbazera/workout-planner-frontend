@@ -10,7 +10,7 @@ export const useLogin = () => {
         setIsLoading(true)
         setError(null)
 
-        const response = await fetch(process.env.API_URL + '/api/user/login', {
+        const response = await fetch('https://polar-plains-02584-00b5f84bf725.herokuapp.com/api/user/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

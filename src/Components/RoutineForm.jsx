@@ -41,7 +41,7 @@ const RoutineForm = () => {
 
         const routine = { title, exercises }
 
-        const response = await fetch(process.env.API_URL + '/api/routines', {
+        const response = await fetch('https://polar-plains-02584-00b5f84bf725.herokuapp.com/api/routines', {
             method: 'POST',
             body: JSON.stringify(routine),
             headers: {
