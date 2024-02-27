@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { useRoutinesContext } from '../hooks/useRoutinesContext'
 import { useAuthContext } from '../hooks/useAuthContext'
+import { Helmet } from 'react-helmet'
 
 import RoutineDetails from '../Components/RoutineDetails'
 import RoutineForm from '../Components/RoutineForm'

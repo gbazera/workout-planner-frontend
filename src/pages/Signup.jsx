@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSignup } from '../hooks/useSignup'
+import { Helmet } from 'react-helmet'
 
 const Signup = () => {
     const [email, setEmail] = useState('')
