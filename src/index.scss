@@ -62,12 +62,20 @@ form{
         color: #fff;
     }
 
+    .field.below-heading{
+        margin-top: 10px;
+    }
+
     .field.label{
         padding-bottom: 0;
     }
 
-    .field.error{
-        padding-top: 0;
+    form .field.error {
+        font-size: 14px;
+        margin-top: 10px;
+        padding: 10px 5px;
+        color: #ee6e6e;
+        font-weight: bold;
     }
 
     .field.inputs *{
@@ -259,11 +267,13 @@ html.overflow{
 
     form{
         .field{
+            font-size: 12px;
     
             *{
                 font-size: 12px;
             }
         }
+        
 
         input{
             padding: 10px;

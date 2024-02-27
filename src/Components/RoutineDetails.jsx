@@ -60,7 +60,7 @@ const RoutineDetails = ({ routine }) => {
     const addExercise = (e) => {
         e.preventDefault()
 
-        if (!tempExercise.name || !tempExercise.sets || !tempExercise.reps) return setError('Please fill out all fields');
+        if (!tempExercise.name || !tempExercise.sets || !tempExercise.reps) return setError('Please fill out all fields.');
 
         setRoutineData({
             ...routineData,
@@ -170,7 +170,7 @@ const RoutineDetails = ({ routine }) => {
                     <div>
                         <form>
                             <div className="field heading">Edit Routine</div>
-                            <div className="field label">Routine Name</div>
+                            <div className="field label below-heading">Routine Name</div>
                             <div className='field'>
                                 <input
                                     type="text"
@@ -230,11 +230,11 @@ const RoutineDetails = ({ routine }) => {
                                     <i className='bx bx-plus'></i>
                                 </button>
                             </div>
-                            <div>
+                            <div className='field'>
                                 <button className='button colored' onClick={handleSave}>Save</button>
                             </div>
-                            <div>
-                                {error && <p>{error}</p>}
+                            <div className='field error'>
+                                {error && {error}}
                             </div>
                         </form>
                     </div>
