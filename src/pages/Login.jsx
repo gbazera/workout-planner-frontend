@@ -14,6 +14,9 @@ const Login = () => {
 
     return (
         <form onSubmit={handleSubmit} className="auth">
+            <Helmet>
+                <title>Login - Workout Planner</title>
+            </Helmet>
             <div className='field heading'>
                 Login
             </div>

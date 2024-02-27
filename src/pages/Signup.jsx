@@ -14,6 +14,10 @@ const Signup = () => {
 
     return (
         <form onSubmit={handleSubmit} className="auth">
+            <Helmet>
+                <title>Signup - Workout Planner</title>
+            </Helmet>
+
             <div className="field heading">Sign Up</div>
 
             <div className="field label">Email</div>

@@ -24,6 +24,9 @@ const Home = () => {
 
     return (
         <div className="home">
+            <Helmet>
+                <title>Workout Planner</title>
+            </Helmet>
             <RoutineForm />
             <div className="routines">
                 {routines &&
