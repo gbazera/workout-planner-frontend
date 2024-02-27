@@ -11,3 +11,5 @@ const RouteWithTitle = ({component: Component, title, ...rest}) => (
         </>
     )} />
 )
+
+export default RouteWithTitle
